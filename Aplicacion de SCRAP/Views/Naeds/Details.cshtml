@@ -1,0 +1,26 @@
+﻿@model Aplicacion_de_SCRAP.Models.Naed
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>Naed</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NNAED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NNAED)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.NaedID }) |
+    @Html.ActionLink("Regresar a la lista", "Index")
+</p>

@@ -1,0 +1,191 @@
+﻿@model IEnumerable<Aplicacion_de_SCRAP.Models.Tickets>
+
+@{
+    ViewBag.Title = "Detalle";
+}
+
+<link href="~/Content/general.css" rel="stylesheet" />
+<script src="~/Scripts/ag-grid.min.noStyle.js"></script>
+<link href="~/Content/ag-grid.css" rel="stylesheet" />
+<link href="~/Content/ag-theme-balham.css" rel="stylesheet" />
+<h2>Detalle</h2>
+
+<p>
+    @Html.ActionLink("Crear Ticket", "Create", "Tickets", new { @class = "btn btn-success" })
+    @Html.ActionLink("Autorizaciones", "Index", "Tickets", new { @class = "btn btn-primary" })
+</p>
+<div class="form-horizontal">
+    <div class="col-md-12">
+        <p style="text-align:center">Reporte de tickets Autorizados</p>
+        <div class="col-xs-12">
+            <div id="myGrid" style="width:100%; height:500px;" class="ag-theme-balham"></div>
+        </div>
+        @*<div class="button-bar">
+                <button onclick="autoSizeAll()" class="btn-primary">Auto-Size All</button>
+            </div>*@
+        <button onclick="autoSizeAll()" class="btn btn-primary">Ajustar Columnas</button>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Exportar</button>
+
+    </div>
+</div>
+
+
+@* modal *@
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Exportar</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Ultimo folio exportado: @Html.Raw(ViewBag.ultimoFolio)</h4>
+                @using (Html.BeginForm("ExportToExcel", "Tickets", FormMethod.Post, new { id = "form-group" }))
+                {
+                    <div id="form-group" class="form-horizontal">
+                        
+                    </div>
+                }
+                <a>@Html.ActionLink("Exportar a Excel", "ExportToExcel", null, new { @class = "btn btn-orange", style = "margin:10px;" })</a>
+                @Html.Raw(TempData["Message"])
+            </di>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+    // specify the columns
+    var columnDefs = [
+        {
+            headerName: "Folio",
+            field: "Folio"
+        },
+        {
+            headerName: "Estado",
+            field: "Estado"
+        },
+        {
+            headerName: "Sub-Ensamble",
+            field: "SubEnsamble"
+        },
+        {
+            headerName: "Linea",
+            field: "Linea"
+        },
+        {
+            headerName: "Fecha de creación del ticket",
+            field: "FechaDeCreacion"
+        },
+        {
+            headerName: "Creado por",
+            field: "Usuario"
+        },
+        {
+            headerName: "Código de defecto",
+            field: "Defecto"
+        },
+        {
+            headerName: "Linea",
+            field: "Linea"
+        },
+        {
+            headerName: "Designacion de componentes",
+            field: "Designacion"
+        },
+        {
+            headerName: "Naed",
+            field: "Naed"
+        },
+        {
+            headerName: "No. de parte",
+            field: "NoDeParte"
+        },
+        {
+            headerName: "Cantidad",
+            field: "Cantidad"
+        },
+        {
+            headerName: "Tipo de Reparación",
+            field: "TipoDeReparacion"
+        },
+        {
+            headerName: "Causa raíz",
+            field: "CausaRaiz"
+        },
+        {
+            headerName: "Supervisor",
+            field: "Supervisor"
+        },
+        {
+            headerName: "Sub-Ensamble",
+            field: "SubEnsamble"
+        }
+    ];
+
+    // size columns
+
+    function autoSizeAll() {
+        var allColumnIds = [];
+        gridOptions.columnApi.getAllColumns().forEach(function (column) {
+            allColumnIds.push(column.colId);
+        });
+        gridOptions.columnApi.autoSizeColumns(allColumnIds);
+    }
+
+    // let the grid know which columns and what data to use
+    var gridOptions = {
+        columnDefs: columnDefs,
+        enableSorting: true,
+        enableFilter: true,
+        filter: 'agDateColumnFilter',
+        autoGroupColumnDef: autoGroupColumnDef,
+        groupSelectsChildren: true,
+        rowSelection: 'multiple',
+        enableColResize: true,
+        pagination: true
+    };
+
+    var autoGroupColumnDef = {
+        headerName: "Model",
+        field: "model",
+        cellRenderer: 'agGroupCellRenderer',
+        cellRendererParams: {
+            checkbox: true
+        }
+    }
+
+    // lookup the container we want the Grid to use
+    var eGridDiv = document.querySelector('#myGrid');
+
+    // create the grid passing in the div to use together with the columns & data we want to use
+    new agGrid.Grid(eGridDiv, gridOptions);
+
+    fetch('/scrap/Tickets/ExportData/').then(function (response) {
+        //fetch('/Tickets/Export/').then(function (response) {
+        console.log(response);
+        return response.json();
+    }).then(function (data) {
+        gridOptions.api.setRowData(data);
+    })
+
+    function currencyFormatter(params) {
+        return '$' + formatNumber(params.value) + " USD";
+    }
+
+    function formatNumber(number) {
+        return Math.floor(number).toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+    }
+
+</script>
+

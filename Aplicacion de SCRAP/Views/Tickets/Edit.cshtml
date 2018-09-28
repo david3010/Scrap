@@ -1,0 +1,140 @@
+﻿@model Aplicacion_de_SCRAP.Models.Tickets
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar</h2>
+<link href="~/Content/general.css" rel="stylesheet" />
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="Formulario">
+        <div class="col-md-12">
+            <div class="row-2">
+                <p></p>
+                @Html.ActionLink("Regresar a la lista", "Index", "Tickets", new { @class = "btn btn-orange" })
+            </div>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.TicketScrapID)
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.LineID, "LineID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("LineID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LineID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.SupervisorID, "SupervisorID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("SupervisorID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SupervisorID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.AreaSCRAPID, "AreaSCRAPID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("AreaSCRAPID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.AreaSCRAPID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.NaedID, "NaedID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("NaedID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NaedID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Sub_Ensambles.Sub_Ensamble_Description, "NaedID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("Sub_EnsamblesID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Sub_Ensambles, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.PartNoID, "PartNoID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("PartNoID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PartNoID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.DefectCodeID, "DefectCodeID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("DefectCodeID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DefectCodeID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.RootCauseID, "RootCauseID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RootCauseID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RootCauseID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Repair, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    <b>Re-Trabajo:</b>   @Html.RadioButton("Repair", "Re-Trabajo")<br />
+                    <b>Fallo de Linea:</b> @Html.RadioButton("Repair", "Fallo de linea")
+                    @Html.ValidationMessageFor(model => model.Repair, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col">
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Location1, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Location2, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Location3, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
+                </div>
+                <div class="col-xs-2">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
+                </div>
+                <div class="col-xs-2">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
+                </div>
+                <div class="col-xs-2">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @style = "width:70px; heigt" } })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-offset-4 col-md-6">
+                    <p></p>
+                    <input type="submit" value="Guardar cambios" class="btn btn-orange" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="~/img/logoCTS.ico" rel="shortcut icon" />
+    <title>@ViewBag.Title - SCRAP</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/sweetalert.min.js"></script>
+    <link href="~/Content/layout.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="~/Home/Index">
+                        <img class=".logo" alt="OSRAM" src="~/Img/logo.png">
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("BACK-END", "Create", "Tickets")</li>
+                        <li>@Html.ActionLink("FRONT-END", "Create", "TicketsSMT")</li>
+                        @if (User.IsInRole("SuperUser") || User.IsInRole("Admin"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrar <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+                                    <li>@Html.ActionLink("Areas", "Index", "Areas")</li>
+                                    <li>@Html.ActionLink("Códigos de Defecto", "Index", "DefectCodes")</li>
+                                    <li>@Html.ActionLink("Líneas", "Index", "Lines")</li>
+                                    <li>@Html.ActionLink("Naeds", "Index", "Naeds")</li>
+                                    <li>@Html.ActionLink("Sub-Ensambles", "Index", "Sub_Ensamble")</li>
+                                    <li>@Html.ActionLink("No. de Parte", "Index", "NoParts")</li>
+                                    <li>@Html.ActionLink("Causas Raíz", "Index", "RootCauses")</li>
+                                    <li>@Html.ActionLink("Causas-SMT", "Index", "CauseSMTs")</li>
+                                    <li>@Html.ActionLink("Códigos-SMT", "Index", "CodesSMTs")</li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                    @if (User.IsInRole("Ger_Jef") || User.IsInRole("Ingeniero") || User.IsInRole("Supervisor") || User.IsInRole("Tecnico"))
+                    {
+                        <div class="notifications">
+                            <span class="noti glyphicon glyphicon-bell"><span class="count">&nbsp;</span></span>
+                            <div class="noti-content">
+                                <div class="noti-top-arrow"></div>
+                                <ul id="notiContent"></ul>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-xs-12 color">
+                @RenderBody()
+            </div>
+        </div>
+        <footer>
+            <hr />
+            <p>&copy; @DateTime.Now.Year - OSRAM Mty 2018</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery.signalR-2.3.0.min.js"></script>
+    @*<script src="/signalr/hubs"></script>*@
+    @* Add css  *@
+
+    <style type="text/css">
+        /*Added css for design notification area, you can design by your self*/
+        /* COPY css content from youtube video description*/
+        .notifications {
+            float: right !important;
+        }
+
+        .noti-content {
+            margin-left: -183px;
+            position: fixed;
+            background: #e5e5e5;
+            border-radius: 4px;
+            width: 250px;
+            border: 2px solid #9E988B;
+        }
+
+        ul#notiContent {
+            max-height: 200px;
+            overflow: auto;
+            padding: 0px;
+            margin: 0px;
+            padding-left: 20px;
+        }
+
+            ul#notiContent li {
+                margin: 3px;
+                padding: 6px;
+                background: #fff;
+            }
+
+        .noti-top-arrow {
+            border-color: transparent;
+            border-bottom-color: #F5DEB3;
+            border-style: dashed dashed solid;
+            border-width: 0 8.5px 8.5px;
+            position: absolute;
+            right: 32px;
+            top: -8px;
+        }
+
+        span.noti {
+            color: #f00;
+            margin: 15px;
+            position: inherit;
+            /*right: 30px;*/
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        span.count {
+            position: relative;
+            top: -3px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.noti-content').hide();
+            updateNotification();
+            // Click on notification icon for show notification
+            $('span.noti').click(function (e) {
+                e.stopPropagation();
+                $('.noti-content').show();
+                var count = 0;
+                count = parseInt($('span.count').html()) || 0;
+                updateNotification();
+                $('span.count', this).html('&nbsp;');
+            })
+            // hide notifications
+            $('html').click(function () {
+                $('.noti-content').hide();
+            })
+            // update notification
+            function updateNotification() {
+                $('#notiContent').empty();
+                $('#notiContent').append($('<li>Loading...</li>'));
+                $.ajax({
+                    type: 'GET',
+                    //url: '/scrap/Home/GetNotifications/',
+                    url: '/Home/GetNotifications/',
+                    success: function (response) {
+                        $('#notiContent').empty();
+                        if (response == 0) {
+                            $('#notiContent').append($('<li>No hay datos disponibles</li>'));
+                        }
+                        if (response > 0) {
+                            $('#notiContent').append($('<li>Usted tiene: ' + response + ' tickets por autorizar</li> '));
+                            $('span.count').html(response);
+                        }
+                        if (response > 20) {
+                            window.alert('Usted tiene más de 20 tickets por autorizar...');
+                        }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            };
+        });
+    </script>
+</body>
+</html>
+
+

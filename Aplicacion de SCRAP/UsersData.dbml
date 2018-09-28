@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="TraSys" Class="UsersDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=app-mty1;Initial Catalog=TraSys;User ID=mntracesys" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="TraSysConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblUsuarios" Member="tblUsuarios">
+    <Type Name="tblUsuario">
+      <Column Name="iLlave" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="iIdNumUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="strNombre" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="strPassword" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="iIdDepartamento" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="iIdPuesto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="strEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="iIdJefe" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iCerrarCaja" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iCambiarBatch" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iCambiarCombox" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iCambiarNaedPruebas" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iReImpresionDateCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iIdAreaTiempoMuerto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="iImprimeDateCode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

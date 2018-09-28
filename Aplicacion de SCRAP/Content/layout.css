@@ -1,0 +1,111 @@
+﻿/**/
+
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    color: inherit;
+    background-color: transparent;
+}
+
+    .jumbotron h2 {
+        color: orangered;
+    }
+
+.navbar-brand > img {
+    display: block;
+    width: 50px;
+    height: 50px;
+}
+
+footer {
+    bottom: 0;
+}
+
+    footer > p {
+        margin: 0 0 10px;
+        color: orangered;
+    }
+
+p {
+    color: black;
+}
+
+hr {
+    color: black;
+}
+
+
+/* ------------------------------------------------------------ */
+
+.navbar-toggle {
+    position: relative;
+    float: right;
+    padding: 9px 10px;
+    margin-top: 8px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    background-color: transparent;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+    .navbar-toggle:focus {
+        outline: 0;
+    }
+
+    .navbar-toggle .icon-bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        border-radius: 1px;
+    }
+
+        .navbar-toggle .icon-bar + .icon-bar {
+            margin-top: 4px;
+        }
+
+@media (min-width: 768px) {
+    .navbar-toggle {
+        display: none;
+    }
+}
+
+.navbar-default .navbar-toggle {
+    border-color: #ddd;
+}
+
+    .navbar-default .navbar-toggle:hover,
+    .navbar-default .navbar-toggle:focus {
+        background-color: #ddd;
+    }
+
+    .navbar-default .navbar-toggle .icon-bar {
+        background-color: #888;
+    }
+
+.navbar-inverse .navbar-toggle {
+    border-color: #333;
+}
+
+    .navbar-inverse .navbar-toggle:hover,
+    .navbar-inverse .navbar-toggle:focus {
+        background-color: #333;
+    }
+
+    .navbar-inverse .navbar-toggle .icon-bar {
+        background-color: #fff;
+    }
+
+/* ---------------------------------------------- */
+
+.container .body-content {
+    background-image: url('../img/1280px-Osram_Logo.svg.png');
+    background-repeat: no-repeat;
+    position: relative;
+    width: 85%;
+    height: 610px;
+    margin-left: auto;
+    margin-right: auto;
+}

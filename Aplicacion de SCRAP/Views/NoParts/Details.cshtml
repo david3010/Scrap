@@ -1,0 +1,42 @@
+﻿@model Aplicacion_de_SCRAP.Models.PartNo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>No. de parte</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NPart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NPart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitPrice)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.PartNoID }) |
+    @Html.ActionLink("Regresar a la lista", "Index")
+</p>

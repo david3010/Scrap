@@ -1,0 +1,30 @@
+﻿@model Aplicacion_de_SCRAP.Models.ViewModels.UserView
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Premisos</h2>
+
+<h4>Tipo de permisos para: @Model.Name</h4>
+
+<p>
+    @Html.ActionLink("Agregar permiso", "AddRole", new { userID = Model.UserID }, new { user = Model, @class = "btn btn-primary" })
+    @Html.ActionLink("Regresar a Usuarios", "Index", "", new { @class = "btn btn-primary" })
+</p>
+@Html.Raw(TempData["Empty"])
+<table class="table">
+    @for (int i = 0; i < Model.Roles.Count; i++)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Roles[i].Name)
+            </td>
+            <td>
+                @Html.ActionLink("Eliminar", "DeleteRole", new { userID = Model.UserID, roleID = Model.Roles[i].RoleID })
+            </td>
+        </tr>
+    }
+</table>
+
+
+

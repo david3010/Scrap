@@ -1,0 +1,157 @@
+﻿@model Aplicacion_de_SCRAP.Models.Tickets
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<link href="~/Content/general.css" rel="stylesheet" />
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<h2>Reportes de scrap Procesos</h2>
+
+
+@using (Html.BeginForm("Create", "Tickets", FormMethod.Post, new { id = "form-group" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="form-group" class="form-horizontal">
+        <div class="col-md-12">
+            @if (User.IsInRole("SuperUser") || User.IsInRole("Admin") || User.IsInRole("Authorizing") || User.IsInRole("Ger_Jef") || User.IsInRole("Ingeniero") || User.IsInRole("Supervisor") || User.IsInRole("Tecnico"))
+            {
+                @Html.ActionLink("Autorizaciones", "Index", "Tickets", new { @class = "btn btn-primary", style = "margin-right:5px" })
+                @Html.ActionLink("Detalle", "Export", "Tickets", new { @class = "btn btn-primary", style = "margin-right:5px" })
+            }
+            <hr />
+            <p>
+                <b>
+                    Cuando el # de parte que se envia a SCRAP sea de un sub ensamble, el espacio para la designacion del
+                    componente se debe llenar, especificando el ó los componentes dañados.
+                    Toda material enviado a SCRAP se enviará con el personal encargado de su autorizacion.
+                    Si el material es del area de Analisis, el Técnico de Diagnostico debe autorizar el SCRAP.
+                    Todos los campos deben de ser llenados.
+                </b>
+            </p>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-offset-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.SupervisorName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("SupervisorID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.SupervisorID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Lines.LineName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("LineID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.LineID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Naeds.NNAED, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("NaedID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NaedID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Sub_Ensambles.Sub_Ensamble_Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("Sub_EnsambleID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Sub_Ensambles.Sub_EnsambleID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.DefectCodes.DefectCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("DefectCodeID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DefectCodeID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-2">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.NoParts.NPart, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("PartNoID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PartNoID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.AreaScrap.NAreaScrap, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("AreaSCRAPID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.AreaSCRAPID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.RootCause.NRootCause, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            @Html.DropDownList("RootCauseID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.RootCauseID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Repair, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-6">
+                            <b>Re-Trabajo:</b>   @Html.RadioButton("Repair", "Re-Trabajo")<br />
+                            <b>Fallo de Linea:</b> @Html.RadioButton("Repair", "Fallo de linea")
+                            @Html.ValidationMessageFor(model => model.Repair, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                        <div class="col-xs-2">
+                            @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.EditorFor(model => model.Location1, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.EditorFor(model => model.Location2, new { htmlAttributes = new { @class = "form-control", @style = "width:70px" } })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.EditorFor(model => model.Location3, new { htmlAttributes = new { @class = "form-control", @style = "width:70px; heigt" } })
+                        </div>
+                    </div>
+
+                    <div class="col-md-10">
+                        @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Location1, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Location2, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.Location3, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row btn-create">
+                    <input id="Create" type="submit" value="Crear" class="btn btn-orange btn-block btn-submit" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Message"])
+@Html.Raw(TempData["Alerta"])
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

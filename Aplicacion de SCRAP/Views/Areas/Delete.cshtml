@@ -1,0 +1,32 @@
+﻿@model Aplicacion_de_SCRAP.Models.AreaScrap
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Está seguro que desea eliminar?</h3>
+<div>
+    <h4>Área que genera Scrap</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NAreaScrap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NAreaScrap)
+        </dd>
+        @ViewBag.msg
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a la lista", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,139 @@
+﻿@model Aplicacion_de_SCRAP.Models.Tickets
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<link href="~/Content/general.css" rel="stylesheet" />
+
+<h2>Eliminar</h2>
+
+<h3>Está seguro que desea eliminar el ticket?</h3>
+<div>
+    <h4> </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AreaScrap.NAreaScrap)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AreaScrap.NAreaScrap)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DefectCodes.DefectCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DefectCodes.DefectCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lines.LineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lines.LineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Naeds.NNAED)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naeds.NNAED)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sub_Ensambles.Sub_Ensamble_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sub_Ensambles.Sub_Ensamble_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoParts.NPart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoParts.NPart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RootCause.NRootCause)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RootCause.NRootCause)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Supervisors.SupervisorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Supervisors.SupervisorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Repair)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Repair)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a la lista", "Index")
+        </div>
+    }
+</div>

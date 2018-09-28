@@ -1,0 +1,128 @@
+﻿@model PagedList.IPagedList<Aplicacion_de_SCRAP.Models.Tickets>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Autorizaciones";
+}
+
+<link href="~/Content/general.css" rel="stylesheet" />
+<h2>Autorizaciones</h2>
+
+<p>
+    @Html.ActionLink("Crear Ticket", "Create", "Tickets", new { @class = "btn btn-success" })
+    @Html.ActionLink("Detalle", "Export", "", new { @class = "btn btn-primary" })
+</p>
+
+<div class="background-table">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table">
+                <div class="table-responsive">
+                    <table>
+                        <tr>
+                            <th>
+                                @Html.ActionLink("Area que generó Scrap", "Index", new { sortOrder = ViewBag.AreaSortParm })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Códigos de defecto", "Index", new { sortOrder = ViewBag.Codigos })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Linea", "Index", new { sortOrder = ViewBag.Linea })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Naed", "Index", new { sortOrder = ViewBag.Naed })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Sub-Ensamble", "Index", new { sortOrder = ViewBag.SubEnsamble })
+                            </th>
+                            <th>
+                                @Html.ActionLink("No. de parte", "Index", new { sortOrder = ViewBag.NoDeParte })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Causa raíz que generó SCRAP", "Index", new { sortOrder = ViewBag.CausaRaiz })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Creador del ticket", "Index", new { sortOrder = ViewBag.Creador })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Cantidad de componentes", "Index", new { sortOrder = ViewBag.Cantidad })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Costo", "Index", new { sortOrder = ViewBag.Costo })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Designacion", "Index", new { sortOrder = ViewBag.Designacion })
+                            </th>
+                            <th>
+                                @Html.ActionLink("Tipo de Reparacion", "Index", new { sortOrder = ViewBag.Reparacion })
+                            </th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        @{var i = 0;
+                            foreach (var item in Model)
+                            {
+                                i++;
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.AreaScrap.NAreaScrap)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DefectCodes.DefectCode)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Lines.LineName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Naeds.NNAED)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Sub_Ensambles.Sub_Ensamble_Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.NoParts.NPart)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.RootCause.NRootCause)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Creator)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+                                    <td>
+                                        <span>@Html.DisplayFor(modelItem => item.Cost) USD</span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Designation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Repair)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Aceptar", "Accept", "Tickets", new { id = item.TicketScrapID }, new { @class = "btn btn-success" })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Rechazar", "Refuse", "Tickets", new { id = item.TicketScrapID }, new { @class = "btn btn-danger" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        @if (i == 0)
+                        {
+                            <tr>
+                                <td colspan="14"> No existen autorizaciones pendientes</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index",
+                        new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -1,0 +1,332 @@
+﻿@model Aplicacion_de_SCRAP.Models.TicketsSMT
+
+@{
+    ViewBag.Title = "Reportes de scrap de SMT";
+}
+
+<link href="~/Content/general.css" rel="stylesheet" />
+
+<h2>Reportes de scrap de SMT</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div id="form-group" class="Formulario">
+        <div class="form-horizontal">
+            <div class="col-md-12">
+                <div>
+                    @Html.ActionLink("Autorizaciones", "Index", "", new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Detalle", "Export", "", new { @class = "btn btn-primary" })
+                </div>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-md-offset-2">
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Sub_Ensambles.Sub_Ensamble_Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("Sub_EnsambleID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Sub_EnsambleID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.Lines.LineName, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("LineID", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.LineID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="control-label col-md-2">SCRAP</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="tipoScrap">
+                                    <option value="---" selected="selected">[Seleccione tipo de SCRAP...]</option>
+                                    <option value="01">PCB</option>
+                                    <option value="com">Componente</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.CodesSMT.code, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.DropDownList("CodesSMTId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CodesSMTId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="control-label col-md-2">Origen</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="origen"></select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.NoParts.NPart, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.PartNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PartNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            @Html.LabelFor(model => model.CauseSMT.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-6">
+                                @*@Html.DropDownList("CauseSMTID", null, htmlAttributes: new { @class = "form-control" })*@
+                                <select class="form-control" id="CausesSMTID"></select>
+                                @Html.ValidationMessageFor(model => model.CauseSMTID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row btn-create">
+                        <input type="submit" value="Crear" class="btn btn-orange btn-block btn-submit" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@Html.Raw(TempData["Alerta"])
+@Html.Raw(TempData["Message"])
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tipoScrap").change(function () {
+                fillCombo("origen", $("#tipoScrap").val());
+            });
+        });
+
+        function fillCombo(updateId, value) {
+            $.getJSON("GETOrigen/" + value,
+                function (data) {
+                    $("#" + updateId).empty();
+                    $.each(data, function (i, item) {
+                        $("#" + updateId).append("<option id='"
+                            + "01" + "'>" + "Atoramiento"
+                            + "</option>");
+                    });
+                });
+        }
+
+    </script>
+}
+
+<p style="text-align:center;">
+    Morbi sem risus, tristique sit amet dignissim at, consectetur ac enim. Maecenas sit amet venenatis purus,
+    et aliquet nibh. Duis mollis efficitur orci vel pharetra. Curabitur a pretium lectus. Phasellus quis ipsum
+    bibendum dui commodo aliquet. Ut cursus vel ex sit amet bibendum. Fusce eu hendrerit odio. Interdum et malesuada
+    fames ac ante ipsum primis in faucibus. Phasellus lobortis orci quis nibh consequat, vestibulum lacinia ipsum vehicula.
+    In fermentum turpis eu tellus consequat, non gravida lacus lacinia. Vivamus orci tortor, porta eget faucibus quis,
+    consectetur vitae lectus. Nulla bibendum, tortor a sagittis tincidunt, augue nisl iaculis purus, sed tempor elit dui vel nibh.
+    Pellentesque arcu augue, maximus sit amet eros consectetur, fringilla iaculis leo.
+</p>
+<style>
+    td, tr {
+        border-color: black;
+        border: solid;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table">
+            <div class="table-responsive">
+                <table class="table-responsive" style="width:100%; color:black;">
+                    <caption style="text-align:center; font-family:'Times New Roman', Times, serif;">Codigos de SCRAP</caption>
+                    <thead>
+                        <tr>
+                            <th>SCRAP</th>
+                            <th>ORIGEN</th>
+                            <th colspan="2">CODIGO</th>
+                            <th>CAUSA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="33"><strong>PCB</strong></td>
+                            <td rowspan="8"><strong>Atoramiento<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="8"><strong>A</strong></td>
+                            <td>1</td>
+                            <td>Atoramiento en Cargadora</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                Atoramiento en DEK
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Atoramiento en AX</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Atoramiento en Horno</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Atoramiento en AOI</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Atoramiento en VCD</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Atoramiento en Radial</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Atoramiento en Inversor</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Ajuste de Procesos<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="2"><strong>B</strong></td>
+                            <td>1</td>
+                            <td>Producto</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Herramental</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Mal manejo<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="2"><strong>C</strong></td>
+                            <td>1</td>
+                            <td>
+                                Quebrada en su empaque(materiales)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Operador</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><strong>PCB pandeado<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="3"><strong>D</strong></td>
+                            <td>1</td>
+                            <td>Proveedor</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Proceso</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Operador</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="16"><strong>Mala operación<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="16"><strong>E</strong></td>
+                            <td>1</td>
+                            <td>Falta proceso top</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Componente faltante</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Componente equivocado</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Estencil tapado</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Componentes regados (Pasa por horno)</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Sobrante de producción</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Barrida (Componentes movidos)</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Horno apagado (Apagon) quemadas</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Reparación manual de componentes de inserción</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Soldadura fría (Operación)</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Insuficiencia de pasta</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Insuficiencia de goma</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>Exceso de pasta</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Exceso de goma</td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td>PCB equivocada</td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td>Mal lavado</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="1"><strong>Corte de energía<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="1"><strong>F</strong></td>
+                            <td>1</td>
+                            <td>Soldadura fría</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="1"><strong>Reparacion SMT<br />(Scrap-PCB)</strong></td>
+                            <td rowspan="1"><strong>G</strong></td>
+                            <td>1</td>
+                            <td>PCB quemada</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3"><strong>Componente</strong></td>
+                            <td rowspan="3"><strong>SCRAP Componente</strong></td>
+                            <td rowspan="3"><strong>H</strong></td>
+                            <td>1</td>
+                            <td>Equivocado</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Dañado por maquina</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Dañado (Materiales)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

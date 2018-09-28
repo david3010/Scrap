@@ -1,0 +1,48 @@
+﻿@model Aplicacion_de_SCRAP.Models.PartNo
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro que desea eliminar?</h3>
+<div>
+    <h4>No. de parte</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NPart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NPart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitPrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitPrice)
+        </dd>
+        @ViewBag.msg
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a la lista", "Index")
+        </div>
+    }
+</div>

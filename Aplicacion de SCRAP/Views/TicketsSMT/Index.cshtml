@@ -1,0 +1,140 @@
+﻿@model PagedList.IPagedList<Aplicacion_de_SCRAP.Models.TicketsSMT>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Autorizaciones SMT";
+}
+<link href="~/Content/general.css" rel="stylesheet" />
+
+<h2>Autorizaciones SMT</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo Ticket", "Create", "", new { @class = "btn btn-success" })
+    @Html.ActionLink("Detalle", "Export", "", new { @class = "btn btn-primary" })
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table">
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @*@Html.DisplayNameFor(model => model.CauseSMT.Code)*@
+                            Folio
+                        </th>
+                        <th>
+                            @*@Html.DisplayNameFor(model => model.CauseSMT.Code)*@
+                            Causa
+                        </th>
+                        <th>
+                            @*@Html.DisplayNameFor(model => model.CodesSMT.code)*@
+                            Codigo Asignado
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Lines.LineName)*@
+                            Linea
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.NoParts.NPart)*@
+                            No. de Parte
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Sub_Ensambles.Sub_Ensamble_Description)*@
+                            Sub-Ensamble
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.TicketStatus)*@
+                            Estado
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.CreateDate)*@
+                            Fecha de creación
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Quantity)*@
+                            Cantidad
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Creator)*@
+                            Creador del ticket
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Cost)*@
+                            Costo
+                        </th>
+                        <th>
+                            @* @Html.DisplayNameFor(model => model.Authorizing)*@
+                            Autorizó
+                        </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    @{ var i = 0;
+                        foreach (var item in Model)
+                        {
+                            i++;
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketSMTID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CauseSMT.Code)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CodesSMT.code)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Lines.LineName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NoParts.NPart)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Sub_Ensambles.Sub_Ensamble_Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TicketStatus)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreateDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Creator)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cost)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Authorizing)
+                                </td>
+                                @*<td>
+                                        @Html.ActionLink("Edit", "Edit", new { id=item.TicketSMTID }) |
+                                        @Html.ActionLink("Details", "Details", new { id=item.TicketSMTID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id=item.TicketSMTID })
+                                    </td>*@
+                                <td>
+                                    @Html.ActionLink("Autorizar", "Accept", new { id = item.TicketSMTID }, new { @class = "btn btn-success" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Rechazar", "Refuse", new { id = item.TicketSMTID }, new { @class = "btn btn-danger" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                    @if (i == 0)
+                    {
+                        <tr>
+                            <td colspan="14"> No existen autorizaciones pendientes</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

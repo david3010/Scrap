@@ -1,0 +1,16 @@
+namespace Aplicacion_de_SCRAP.Migrations
+{
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class AddBossId : DbMigration
+    {
+        public override void Up()
+        {
+        }
+        
+        public override void Down()
+        {
+        }
+    }
+}

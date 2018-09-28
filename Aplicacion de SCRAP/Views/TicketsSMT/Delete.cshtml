@@ -1,0 +1,112 @@
+﻿@model Aplicacion_de_SCRAP.Models.TicketsSMT
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Seguro que deseas eliminar este registro?</h3>
+<div>
+    <h4>SMT</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CauseSMT.Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CauseSMT.Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodesSMT.code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodesSMT.code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lines.LineName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lines.LineName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoParts.NPart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoParts.NPart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sub_Ensambles.Sub_Ensamble_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sub_Ensambles.Sub_Ensamble_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TicketStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TicketStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Authorizing)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Authorizing)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a la lista", "Index")
+        </div>
+    }
+</div>

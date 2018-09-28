@@ -1,0 +1,50 @@
+﻿@model PagedList.IPagedList<Aplicacion_de_SCRAP.Models.ViewModels.UserView>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Usuarios</h2>
+<div class="col-12">
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>
+                    No. de Empleado
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Email
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EMail)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Permisos", "Roles", new { userID = item.UserID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
