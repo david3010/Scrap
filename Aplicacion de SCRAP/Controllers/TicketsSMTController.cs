@@ -63,37 +63,82 @@ namespace Aplicacion_de_SCRAP.Controllers
             return View(ticketsSMT);
         }
 
-        [ActionName("GETOrigen")]
-        public ActionResult GetOrigen(string id)
+        public List<SelectListItem> LoadScrap()
         {
-            var ca = GetNameOrigen(id);
-            return new JsonResult() { Data = ca , JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem { Text = "[Seleccione tipo de SCRAP...]", Value = "--" });
+            li.Add(new SelectListItem { Text = "PCB", Value = "0" });
+            li.Add(new SelectListItem { Text = "Componente", Value = "1" });
+            return li;
         }
 
-        public IEnumerable<CauseSMT> GetNameOrigen(string code)
+        public JsonResult GetOrigen(string id)
         {
-            List<CauseSMT> ca = new List<CauseSMT>();
-            ca = db.CauseSMTs.Where(x => x.Code == code).ToList();
-            return ca;
+            List<SelectListItem> Origins = new List<SelectListItem>();
+            switch (id)
+            {
+                case "0":
+                    Origins.Add(new SelectListItem { Text = "Atoramiento", Value = "A"});
+                    Origins.Add(new SelectListItem { Text = "Ajustes de procesos", Value = "B" });
+                    Origins.Add(new SelectListItem { Text = "Mal manejo", Value = "C" });
+                    Origins.Add(new SelectListItem { Text = "PCB pandeado", Value = "D" });
+                    Origins.Add(new SelectListItem { Text = "Mala operación", Value = "E" });
+                    Origins.Add(new SelectListItem { Text = "Corte de energía", Value = "F" });
+                    Origins.Add(new SelectListItem { Text = "ReparacionSMT", Value = "G" });
+                    break;
+                case "1":
+                    Origins.Add(new SelectListItem { Text = "SCRAP-Componente", Value = "H" });
+                    break;
+            }
+            return Json(new SelectList(Origins, "Value", "Text"), JsonRequestBehavior.AllowGet);
         }
 
-        [ActionName("GETCausas")]
-        public ActionResult GetCausas(string id)
+        public JsonResult GetCausa(string id)
         {
-            var ca = GetPaisesPorContinente(id);
-            return new JsonResult() { Data = ca, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            List<SelectListItem> Origins = new List<SelectListItem>();
+            switch (id)
+            {
+                case "A":
+                    db.CauseSMTs.Select(u => u.Code == "A1").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A2").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A3").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A4").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A5").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A6").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A7").FirstOrDefault();
+                    db.CauseSMTs.Select(u => u.Code == "A8").FirstOrDefault();
+                    break;
+                case "B":
+                    
+                    break;
+                case "C":
+      
+                    break;
+                case "D":
+                    
+                    break;
+                case "E":
+      
+                    break;
+                case "F":
+                    
+                    break;
+                case "G":
+      
+                    break;
+                case "H":
+                    
+                    break;
+            }
+            return Json(new SelectList(Origins, "Value", "Text"), JsonRequestBehavior.AllowGet);
         }
 
-        public IEnumerable<CauseSMT> GetPaisesPorContinente(string code)
-        {
-            List<CauseSMT> ca = new List<CauseSMT>();
-            ca = db.CauseSMTs.Where(x => x.Code == code).ToList();
-            return ca;
-        }
 
         // GET: TicketsSMT/Create
         public ActionResult Create()
         {
+            ViewBag.Scrap = LoadScrap();
+
             var listaLineas = from u in db.Lines where u.Tipo == 1 select u;
             List<Line> listLines = new List<Line>();
             listLines = listaLineas.ToList();
@@ -125,7 +170,7 @@ namespace Aplicacion_de_SCRAP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TicketSMTID,TicketStatus,Sub_EnsambleID,LineID,CodesSMTId,CreateDate,Quantity,PartNo,CauseSMTID,Creator,Cost,Authorizing")] TicketsSMT ticketsSMT)
         {
-            int id=0;
+            int id = 0;
 
             var Sub_EnsamblesID = Request["Sub_EnsambleID"];
             var LineID = Request["LineID"];
@@ -162,7 +207,7 @@ namespace Aplicacion_de_SCRAP.Controllers
             }
 
             PartNo NumPart = new PartNo();
-            
+
             try
             {
                 NumPart = (from n in db.PartNoes where n.NPart == ticketsSMT.PartNo select n).FirstOrDefault();

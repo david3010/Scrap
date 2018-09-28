@@ -49,11 +49,7 @@
                         <div class="col-md-6">
                             <label class="control-label col-md-2">SCRAP</label>
                             <div class="col-md-6">
-                                <select class="form-control" id="tipoScrap">
-                                    <option value="---" selected="selected">[Seleccione tipo de SCRAP...]</option>
-                                    <option value="01">PCB</option>
-                                    <option value="com">Componente</option>
-                                </select>
+                                @Html.DropDownList("Scrap", ViewBag.Scrap as List<SelectListItem>, new { @class = "form-control" })
                             </div>
                         </div>
 
@@ -68,7 +64,7 @@
                         <div class="col-md-6">
                             <label class="control-label col-md-2">Origen</label>
                             <div class="col-md-6">
-                                <select class="form-control" id="origen"></select>
+                                @Html.DropDownList("Origen", new SelectList(string.Empty, "Value", "Text"), "[Seleccione origen...]", new { @class = "form-control" })
                             </div>
                         </div>
 
@@ -108,22 +104,48 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
         $(document).ready(function () {
-            $("#tipoScrap").change(function () {
-                fillCombo("origen", $("#tipoScrap").val());
+            $("#Scrap").change(function () {
+                $("#Origen").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetOrigen")',
+                    datatype: 'json',
+                    data: { id: $("#Scrap").val() },
+                    success: function (origins) {
+                        $.each(origins, function (i, origin) {
+                            $("#Origen").append('<option value="' + origins.Value + '">' +
+                                origin.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert("Error al cargar Origenes");
+                    }
+                });
+                return false;
             });
         });
 
-        function fillCombo(updateId, value) {
-            $.getJSON("GETOrigen/" + value,
-                function (data) {
-                    $("#" + updateId).empty();
-                    $.each(data, function (i, item) {
-                        $("#" + updateId).append("<option id='"
-                            + "01" + "'>" + "Atoramiento"
-                            + "</option>");
-                    });
+        $(document).ready(function () {
+            $("#Scrap").change(function () {
+                $("#Origen").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetOrigen")',
+                    datatype: 'json',
+                    data: { id: $("#Scrap").val() },
+                    success: function (origins) {
+                        $.each(origins, function (i, origin) {
+                            $("#Origen").append('<option value="' + origins.Value + '">' +
+                                origin.Text + '</option>');
+                        });
+                    },
+                    error: function (ex) {
+                        alert("Error al cargar Origenes");
+                    }
                 });
-        }
+                return false;
+            });
+        });
 
     </script>
 }
