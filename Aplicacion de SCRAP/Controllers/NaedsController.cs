@@ -25,11 +25,6 @@ namespace Aplicacion_de_SCRAP.Controllers
             return View(Naeds.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult x()
-        {
-            return View();
-        }
-
         // GET: Naeds/Details/5
         public ActionResult Details(int? id)
         {
