@@ -48,11 +48,11 @@ namespace Aplicacion_de_SCRAP.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "No. de empleado")]
         public int id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }

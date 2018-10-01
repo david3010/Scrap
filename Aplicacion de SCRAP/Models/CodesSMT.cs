@@ -11,9 +11,11 @@ namespace Aplicacion_de_SCRAP.Models
         [Key]
         public int CodesSMTId { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Código Asignado")]
         public string code { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Descripción")]
         public string description { get; set; }
     }

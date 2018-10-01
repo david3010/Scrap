@@ -11,6 +11,7 @@ namespace Aplicacion_de_SCRAP.Models
         [Key]
         public int Sub_EnsambleID { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Sub-Ensamble")]
         public string Sub_Ensamble_Description { get; set; }
 

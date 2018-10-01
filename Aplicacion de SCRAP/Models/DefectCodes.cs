@@ -11,9 +11,11 @@ namespace Aplicacion_de_SCRAP.Models
         [Key]
         public int DefectCodeID { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Código de Defecto de SCRAP")]
         public string DefectCode { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Descripción")]
         public string Description { get; set; }
 

@@ -11,7 +11,7 @@ namespace Aplicacion_de_SCRAP.Models
         [Key]
         public int AreaSCRAPID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Area que generó SCRAP")]
         public string NAreaScrap { get; set; }
 

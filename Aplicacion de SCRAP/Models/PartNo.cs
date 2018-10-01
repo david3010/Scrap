@@ -11,12 +11,15 @@ namespace Aplicacion_de_SCRAP.Models
         [Key]
         public int PartNoID { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Número de parte")]
         public string NPart { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "Descripción")]
         public string PartDescription { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
         [Display(Name = "Costo")]
         public float UnitPrice { get; set; }

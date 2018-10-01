@@ -12,6 +12,7 @@ namespace Aplicacion_de_SCRAP.Models
         [Key]
         public int NaedID { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es requerido")]
         [Display(Name = "NAED")]
         public int NNAED { get; set; }
 

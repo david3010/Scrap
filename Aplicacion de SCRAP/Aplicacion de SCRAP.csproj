@@ -274,6 +274,10 @@
     <Compile Include="Migrations\201810011710295_deleteNaedDescription.Designer.cs">
       <DependentUpon>201810011710295_deleteNaedDescription.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810012015203_act.cs" />
+    <Compile Include="Migrations\201810012015203_act.Designer.cs">
+      <DependentUpon>201810012015203_act.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autorizantes.cs" />
     <Compile Include="Models\CauseSMT.cs" />
@@ -508,6 +512,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810011710295_deleteNaedDescription.resx">
       <DependentUpon>201810011710295_deleteNaedDescription.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810012015203_act.resx">
+      <DependentUpon>201810012015203_act.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

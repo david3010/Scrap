@@ -152,7 +152,7 @@ namespace Aplicacion_de_SCRAP.Controllers
             //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
 
             var listCodes = db.CodesSMTs.ToList();
-            listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione No. de parte...]" });
+            listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione Código...]" });
             listCodes = listCodes.OrderBy(l => l.description).ToList();
             ViewBag.CodesSMTId = new SelectList(listCodes, "CodesSMTId", "description");
             return View();
