@@ -75,15 +75,16 @@
                                 @Html.ValidationMessageFor(model => model.PartNo, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            @Html.LabelFor(model => model.CauseSMT.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <form method="POST">
                             <div class="col-md-6">
-                                @*@Html.DropDownList("CauseSMTID", null, htmlAttributes: new { @class = "form-control" })*@
-                                <select class="form-control" id="CausesSMTID"></select>
-                                @Html.ValidationMessageFor(model => model.CauseSMTID, "", new { @class = "text-danger" })
+                                @Html.LabelFor(model => model.CauseSMT.Code, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-6">
+                                    @*@Html.DropDownList("CauseSMTID", null, htmlAttributes: new { @class = "form-control" })*@
+                                    <select class="form-control" id="CauseSMTID" name="CauseSMTID"></select>
+                                    @Html.ValidationMessageFor(model => model.CauseSMTID, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
 
@@ -105,6 +106,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $("#Scrap").change(function () {
+                $("#CauseSMTID").empty();
                 $("#Origen").empty();
                 $.ajax({
                     type: 'POST',
@@ -112,8 +114,9 @@
                     datatype: 'json',
                     data: { id: $("#Scrap").val() },
                     success: function (origins) {
+                        $("#Origen").append("<option value='--' id=''>[Seleccione Origen...]</option>");
                         $.each(origins, function (i, origin) {
-                            $("#Origen").append('<option value="' + origins.Value + '">' +
+                            $("#Origen").append('<option value="' + origin.Value + '">' +
                                 origin.Text + '</option>');
                         });
                     },
@@ -126,21 +129,22 @@
         });
 
         $(document).ready(function () {
-            $("#Scrap").change(function () {
-                $("#Origen").empty();
+            $("#Origen").change(function () {
+                $("#CauseSMTID").empty();
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("GetOrigen")',
+                    url: '@Url.Action("GetCausa")',
                     datatype: 'json',
-                    data: { id: $("#Scrap").val() },
-                    success: function (origins) {
-                        $.each(origins, function (i, origin) {
-                            $("#Origen").append('<option value="' + origins.Value + '">' +
-                                origin.Text + '</option>');
+                    data: { id: $("#Origen").val() },
+                    success: function (causes) {
+                        $("#CauseSMTID").append("<option value='--' id=''>[Seleccione Causa...]</option>");
+                        $.each(causes, function (i, cause) {
+                            $("#CauseSMTID").append('<option value="' + cause.id + '" id= "' + cause.id + ' ">' +
+                                cause.Text + '</option>');
                         });
                     },
                     error: function (ex) {
-                        alert("Error al cargar Origenes");
+                        alert("Error al cargar causas, llame al administrador.");
                     }
                 });
                 return false;

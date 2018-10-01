@@ -160,8 +160,8 @@
                 $('#notiContent').append($('<li>Loading...</li>'));
                 $.ajax({
                     type: 'GET',
-                    //url: '/scrap/Home/GetNotifications/',
-                    url: '/Home/GetNotifications/',
+                    url: '/scrap/Home/GetNotifications/',
+                    //url: '/Home/GetNotifications/',
                     success: function (response) {
                         $('#notiContent').empty();
                         if (response == 0) {

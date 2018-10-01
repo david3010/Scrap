@@ -87,50 +87,45 @@ namespace Aplicacion_de_SCRAP.Controllers
                     Origins.Add(new SelectListItem { Text = "ReparacionSMT", Value = "G" });
                     break;
                 case "1":
+                    Origins.Clear();
                     Origins.Add(new SelectListItem { Text = "SCRAP-Componente", Value = "H" });
                     break;
             }
             return Json(new SelectList(Origins, "Value", "Text"), JsonRequestBehavior.AllowGet);
         }
 
+        //Cargar causas en DropDownList de Create
         public JsonResult GetCausa(string id)
         {
-            List<SelectListItem> Origins = new List<SelectListItem>();
+            var Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "1").ToList();
             switch (id)
             {
                 case "A":
-                    db.CauseSMTs.Select(u => u.Code == "A1").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A2").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A3").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A4").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A5").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A6").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A7").FirstOrDefault();
-                    db.CauseSMTs.Select(u => u.Code == "A8").FirstOrDefault();
+                    Causes = db.CauseSMTs.Select(u => new { Value=u.Code, Text=u.Description, id=u.CauseSMTID }).Where(u => u.Value == "A").ToList();
                     break;
                 case "B":
-                    
+                    Causes = db.CauseSMTs.Select(u => new { Value=u.Code, Text=u.Description, id=u.CauseSMTID }).Where(u => u.Value == "B").ToList();
                     break;
                 case "C":
-      
+                    Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "C").ToList();
                     break;
                 case "D":
-                    
+                    Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "D").ToList();
                     break;
                 case "E":
-      
+                    Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "E").ToList();
                     break;
                 case "F":
-                    
+                    Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "F").ToList();
                     break;
                 case "G":
-      
+                    Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "G").ToList();
                     break;
                 case "H":
-                    
+                    Causes = db.CauseSMTs.Select(u => new { Value = u.Code, Text = u.Description, id = u.CauseSMTID }).Where(u => u.Value == "H").ToList();
                     break;
             }
-            return Json(new SelectList(Origins, "Value", "Text"), JsonRequestBehavior.AllowGet);
+            return Json(Causes , JsonRequestBehavior.AllowGet);
         }
 
 
@@ -154,7 +149,7 @@ namespace Aplicacion_de_SCRAP.Controllers
             var listCauses = db.CauseSMTs.ToList();
             listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
             listCauses = listCauses.OrderBy(l => l.Description).ToList();
-            ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
+            //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
 
             var listCodes = db.CodesSMTs.ToList();
             listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione No. de parte...]" });
@@ -177,7 +172,7 @@ namespace Aplicacion_de_SCRAP.Controllers
             var CodesSMTId = Request["CodesSMTId"];
             var CauseSMTID = Request["CauseSMTID"];
 
-            if (LineID == "0" || Sub_EnsamblesID == "0" || CodesSMTId == "0" || CauseSMTID == "0")
+            if (LineID == "0" || Sub_EnsamblesID == "0" || CodesSMTId == "0" || CauseSMTID == "--" || CauseSMTID == null)
             {
                 TempData["Alerta"] = "<script>swal('Debe llenar/actualizar todos los campos!');</script>";
 
@@ -196,13 +191,13 @@ namespace Aplicacion_de_SCRAP.Controllers
                 var listCauses = db.CauseSMTs.ToList();
                 listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
                 listCauses = listCauses.OrderBy(l => l.Description).ToList();
-                ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
+                //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
 
                 var listCodes = db.CodesSMTs.ToList();
                 listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione Código...]" });
                 listCodes = listCodes.OrderBy(l => l.description).ToList();
                 ViewBag.CodesSMTId = new SelectList(listCodes, "CodesSMTId", "description");
-
+                ViewBag.Scrap = LoadScrap();
                 return View(ticketsSMT);
             }
 
@@ -212,10 +207,11 @@ namespace Aplicacion_de_SCRAP.Controllers
             {
                 NumPart = (from n in db.PartNoes where n.NPart == ticketsSMT.PartNo select n).FirstOrDefault();
                 ticketsSMT.Cost = NumPart.UnitPrice * ticketsSMT.Quantity;
+                ticketsSMT.PartNo = NumPart.NPart;
             }
             catch (Exception ex)
             {
-                TempData["Message"] = "<script>swal(" + "'Error'" + "," + "'Debe de ingresar correctamente el número de parte..'" + "," + "'danger'" + ");</script>";
+                TempData["Message"] = "<script>swal(" + "'Error'" + "," + "'Debe de ingresar correctamente el número de parte..'" + "," + "'error'" + ");</script>";
 
                 var listaLineas = from u in db.Lines where u.Tipo == 1 select u;
                 List<Line> listLines = new List<Line>();
@@ -232,13 +228,13 @@ namespace Aplicacion_de_SCRAP.Controllers
                 var listCauses = db.CauseSMTs.ToList();
                 listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
                 listCauses = listCauses.OrderBy(l => l.Description).ToList();
-                ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
+                //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
 
                 var listCodes = db.CodesSMTs.ToList();
                 listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione Código...]" });
                 listCodes = listCodes.OrderBy(l => l.description).ToList();
                 ViewBag.CodesSMTId = new SelectList(listCodes, "CodesSMTId", "description");
-
+                ViewBag.Scrap = LoadScrap();
                 return View(ticketsSMT);
             }
 
@@ -275,6 +271,30 @@ namespace Aplicacion_de_SCRAP.Controllers
                     db.SaveChanges();
 
                     id = ticketsSMT.TicketSMTID;
+
+                    if (ticketsSMT.Cost < 34)
+                    {
+                        var super = GetUsersInRole("Supervisor");
+                        SaveAutorizantes(super, id, ticketsSMT, "Supervisor");
+                        var tecnicos = GetUsersInRole("Tecnico");
+                        SaveAutorizantes(tecnicos, id, ticketsSMT, "Tecnico");
+                        TempData["Message"] = "<script>swal('Folio: " + ticketsSMT.TicketSMTID.ToString() + " ', 'El ticket se creó correctamente!');</script>";
+                        return RedirectToAction("Create");
+                    }
+                    else if (ticketsSMT.Cost >= 34 && ticketsSMT.Cost < 70)
+                    {
+                        var Ing = GetUsersInRole("Ingeniero");
+                        SaveAutorizantes(Ing, id, ticketsSMT, "Ingeniero");
+                        TempData["Message"] = "<script>swal('Folio: " + ticketsSMT.TicketSMTID.ToString() + " ', 'El ticket se creó correctamente!');</script>";
+                        return RedirectToAction("Create");
+                    }
+                    else if (ticketsSMT.Cost >= 70)
+                    {
+                        var Ger = GetUsersInRole("Ger_Jef");
+                        SaveAutorizantes(Ger, id, ticketsSMT, "Ger_Jef");
+                        TempData["Message"] = "<script>swal('Folio: " + ticketsSMT.TicketSMTID.ToString() + " ', 'El ticket se creó correctamente!');</script>";
+                        return RedirectToAction("Create");
+                    }
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -294,35 +314,13 @@ namespace Aplicacion_de_SCRAP.Controllers
                 }
             }
 
-            if (ticketsSMT.Cost < 34)
-            {
-                var super = GetUsersInRole("Supervisor");
-                SaveAutorizantes(super, id, ticketsSMT, "Supervisor");
-                var tecnicos = GetUsersInRole("Tecnico");
-                SaveAutorizantes(tecnicos, id, ticketsSMT, "Tecnico");
-                TempData["Message"] = "<script>swal('Folio: " + ticketsSMT.TicketSMTID.ToString() + " ', 'El ticket se creó correctamente!');</script>";
-                return RedirectToAction("Create");
-            }
-            else if (ticketsSMT.Cost >= 34 && ticketsSMT.Cost < 70)
-            {
-                var Ing = GetUsersInRole("Ingeniero");
-                SaveAutorizantes(Ing, id, ticketsSMT, "Ingeniero");
-                TempData["Message"] = "<script>swal('Folio: " + ticketsSMT.TicketSMTID.ToString() + " ', 'El ticket se creó correctamente!');</script>";
-                return RedirectToAction("Create");
-            }
-            else if (ticketsSMT.Cost >= 70)
-            {
-                var Ger = GetUsersInRole("Ger_Jef");
-                SaveAutorizantes(Ger, id, ticketsSMT, "Ger_Jef");
-                TempData["Message"] = "<script>swal('Folio: " + ticketsSMT.TicketSMTID.ToString() + " ', 'El ticket se creó correctamente!');</script>";
-                return RedirectToAction("Create");
-            }
-
-            ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
+            //ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
             ViewBag.CodesSMTId = new SelectList(db.CodesSMTs, "CodesSMTId", "code", ticketsSMT.CodesSMTId);
             var ListaLineas = (from u in db.Lines where u.Tipo == 0 select u).ToList();
             ViewBag.LineID = new SelectList(ListaLineas.OrderBy(l => l.LineName), "IIdLinea", "LineName");
             ViewBag.Sub_EnsambleID = new SelectList(db.Sub_Ensamble, "Sub_EnsambleID", "Sub_Ensamble_Description", ticketsSMT.Sub_EnsambleID);
+            ViewBag.Scrap = LoadScrap();
+            TempData["Message"] = "<script>swal('Error. Verifique los datos ingresados.');</script>";
             return View(ticketsSMT);
         }
 
@@ -338,11 +336,12 @@ namespace Aplicacion_de_SCRAP.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
+            //ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
             ViewBag.CodesSMTId = new SelectList(db.CodesSMTs, "CodesSMTId", "code", ticketsSMT.CodesSMTId);
             var ListaLineas = (from u in db.Lines where u.Tipo == 0 select u).ToList();
             ViewBag.LineID = new SelectList(ListaLineas.OrderBy(l => l.LineName), "IIdLinea", "LineName");
             ViewBag.Sub_EnsambleID = new SelectList(db.Sub_Ensamble, "Sub_EnsambleID", "Sub_Ensamble_Description", ticketsSMT.Sub_EnsambleID);
+            ViewBag.Scrap = LoadScrap();
             return View(ticketsSMT);
         }
 
@@ -359,11 +358,12 @@ namespace Aplicacion_de_SCRAP.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
+            //ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
             ViewBag.CodesSMTId = new SelectList(db.CodesSMTs, "CodesSMTId", "code", ticketsSMT.CodesSMTId);
             var ListaLineas = (from u in db.Lines where u.Tipo == 0 select u).ToList();
             ViewBag.LineID = new SelectList(ListaLineas.OrderBy(l => l.LineName), "IIdLinea", "LineName");
             ViewBag.Sub_EnsambleID = new SelectList(db.Sub_Ensamble, "Sub_EnsambleID", "Sub_Ensamble_Description", ticketsSMT.Sub_EnsambleID);
+            ViewBag.Scrap = LoadScrap();
             return View(ticketsSMT);
         }
 
