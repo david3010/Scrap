@@ -270,6 +270,10 @@
     <Compile Include="Migrations\201809271838260_inputNopart.Designer.cs">
       <DependentUpon>201809271838260_inputNopart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810011710295_deleteNaedDescription.cs" />
+    <Compile Include="Migrations\201810011710295_deleteNaedDescription.Designer.cs">
+      <DependentUpon>201810011710295_deleteNaedDescription.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autorizantes.cs" />
     <Compile Include="Models\CauseSMT.cs" />
@@ -501,6 +505,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809271838260_inputNopart.resx">
       <DependentUpon>201809271838260_inputNopart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810011710295_deleteNaedDescription.resx">
+      <DependentUpon>201810011710295_deleteNaedDescription.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

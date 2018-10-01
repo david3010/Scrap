@@ -649,7 +649,7 @@ namespace Aplicacion_de_SCRAP.Controllers
                 FechaDeCreacion = t.CreateDate.ToString(),
                 CodigoAsignado = t.CodesSMT.description,
                 Cantidad = t.Quantity,
-                NoDeParte = t.NoParts.NPart,
+                NoDeParte = t.PartNo,
                 Causa = t.CauseSMT.Description,
                 Creador = t.Creator,
                 Autorizo = t.Authorizing
