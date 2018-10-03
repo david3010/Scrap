@@ -100,8 +100,8 @@ namespace Aplicacion_de_SCRAP.Models
         public string Repair { get; set; }
 
         [DataType(DataType.Currency)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
-        public float Cost { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N4}")]
+        public double Cost { get; set; }
 
         public int Turn { get; set; }
         public int? Authorizing { get; set; }
