@@ -20,7 +20,7 @@ namespace Aplicacion_de_SCRAP.Models
         public string PartDescription { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:c}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:N5}")]
         [Display(Name = "Costo")]
         public float UnitPrice { get; set; }
 

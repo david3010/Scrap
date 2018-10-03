@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201810031923222_currency.Designer.cs">
       <DependentUpon>201810031923222_currency.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810031952553_currency1.cs" />
+    <Compile Include="Migrations\201810031952553_currency1.Designer.cs">
+      <DependentUpon>201810031952553_currency1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autorizantes.cs" />
     <Compile Include="Models\CauseSMT.cs" />
@@ -521,6 +525,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810031923222_currency.resx">
       <DependentUpon>201810031923222_currency.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031952553_currency1.resx">
+      <DependentUpon>201810031952553_currency1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
