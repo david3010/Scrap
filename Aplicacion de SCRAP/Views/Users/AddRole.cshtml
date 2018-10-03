@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        @Html.ActionLink("Regresar al usuario", "Roles", new { userID = Model.UserID }, new { @clas = "btn btn-primary" })
+        @Html.ActionLink("Cancelar", "Roles", new { userID = Model.UserID }, new { @class = "btn btn-danger" })
         <input type="submit" value="Asignar permiso" class="btn btn-success" />
     </div>
 }
