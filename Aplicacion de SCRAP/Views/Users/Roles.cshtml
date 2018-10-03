@@ -8,8 +8,8 @@
 <h4>Tipo de permisos para: @Model.Name</h4>
 
 <p>
-    @Html.ActionLink("Agregar permiso", "AddRole", new { userID = Model.UserID }, new { user = Model, @class = "btn btn-primary" })
-    @Html.ActionLink("Regresar a Usuarios", "Index", "", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Agregar permiso", "AddRole", new { userID = Model.UserID }, new { user = Model, @class = "btn btn-sucess" })
+    @Html.ActionLink("Regresar a lista de Usuarios", "Index", "", new { @class = "btn btn-primary" })
 </p>
 @Html.Raw(TempData["Empty"])
 <table class="table">

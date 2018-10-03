@@ -563,7 +563,7 @@ namespace Aplicacion_de_SCRAP.Controllers
         public ActionResult ExportToExcel()
         {
             //var tickets = GetTickets();
-            var folio = (from t in db.Tickets select t.TicketScrapID).Max();
+            var folio = (from t in db.Tickets where t.TicketStatus.ToString() == "Aceptado" select t.TicketScrapID ).Max();
             Export ultimo = new Export();
             ultimo.ultimo = folio;
             ultimo.bf = 1;

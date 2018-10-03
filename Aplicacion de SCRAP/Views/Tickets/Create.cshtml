@@ -16,7 +16,7 @@
         <div class="col-md-12">
             @if (User.IsInRole("SuperUser") || User.IsInRole("Admin") || User.IsInRole("Authorizing") || User.IsInRole("Ger_Jef") || User.IsInRole("Ingeniero") || User.IsInRole("Supervisor") || User.IsInRole("Tecnico"))
             {
-                @Html.ActionLink("Autorizaciones", "Index", "Tickets", new { @class = "btn btn-primary", style = "margin-right:5px" })
+                @Html.ActionLink("Autorizaciones", "Index", "Tickets", new { @class = "btn btn-warning", style = "margin-right:5px" })
                 @Html.ActionLink("Detalle", "Export", "Tickets", new { @class = "btn btn-primary", style = "margin-right:5px" })
             }
             <hr />
