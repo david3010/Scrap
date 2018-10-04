@@ -223,7 +223,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AreasController.cs" />
     <Compile Include="Controllers\CauseSMTsController.cs" />
-    <Compile Include="Controllers\CodesSMTsController.cs" />
     <Compile Include="Controllers\DefectCodesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LinesController.cs" />
@@ -286,10 +285,13 @@
     <Compile Include="Migrations\201810031952553_currency1.Designer.cs">
       <DependentUpon>201810031952553_currency1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810041409416_DeleteOptionCodeSMT.cs" />
+    <Compile Include="Migrations\201810041409416_DeleteOptionCodeSMT.Designer.cs">
+      <DependentUpon>201810041409416_DeleteOptionCodeSMT.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Autorizantes.cs" />
     <Compile Include="Models\CauseSMT.cs" />
-    <Compile Include="Models\CodesSMT.cs" />
     <Compile Include="Models\Export.cs" />
     <Compile Include="Models\Sub-Ensamble.cs" />
     <Compile Include="Models\Sub_EnsambleNaeds.cs" />
@@ -461,11 +463,6 @@
     <Content Include="Views\CauseSMTs\Details.cshtml" />
     <Content Include="Views\CauseSMTs\Edit.cshtml" />
     <Content Include="Views\CauseSMTs\Index.cshtml" />
-    <Content Include="Views\CodesSMTs\Create.cshtml" />
-    <Content Include="Views\CodesSMTs\Delete.cshtml" />
-    <Content Include="Views\CodesSMTs\Details.cshtml" />
-    <Content Include="Views\CodesSMTs\Edit.cshtml" />
-    <Content Include="Views\CodesSMTs\Index.cshtml" />
     <Content Include="Views\Lines\Create.cshtml" />
     <Content Include="Views\Lines\Delete.cshtml" />
     <Content Include="Views\Lines\Details.cshtml" />
@@ -528,6 +525,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810031952553_currency1.resx">
       <DependentUpon>201810031952553_currency1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810041409416_DeleteOptionCodeSMT.resx">
+      <DependentUpon>201810041409416_DeleteOptionCodeSMT.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

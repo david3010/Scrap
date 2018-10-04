@@ -45,8 +45,6 @@ namespace Aplicacion_de_SCRAP.Models
 
         public System.Data.Entity.DbSet<Aplicacion_de_SCRAP.Models.CauseSMT> CauseSMTs { get; set; }
 
-        public System.Data.Entity.DbSet<Aplicacion_de_SCRAP.Models.CodesSMT> CodesSMTs { get; set; }
-
         public System.Data.Entity.DbSet<Aplicacion_de_SCRAP.Models.Autorizantes> Autorizantes { get; set; }
 
         public System.Data.Entity.DbSet<Aplicacion_de_SCRAP.Models.Export> Ultimo { get; set; }

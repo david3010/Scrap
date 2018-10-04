@@ -23,10 +23,6 @@ namespace Aplicacion_de_SCRAP.Models
         [Display(Name = "Linea")]
         public int LineID { get; set; }
 
-        [Required(ErrorMessage = "Usted debe de llenar el campo {0}")]
-        [Display(Name = "Código Asignado")]
-        public int CodesSMTId { get; set; }
-
         [Required]
         [DisplayFormat(DataFormatString = "{0:yyy/MM/dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
@@ -61,7 +57,6 @@ namespace Aplicacion_de_SCRAP.Models
 
         public int turn { get; set; }
 
-        public virtual CodesSMT CodesSMT { get; set; }
         public virtual CauseSMT CauseSMT { get; set; }
         public virtual Line Lines { get; set; }
         public virtual PartNo NoParts { get; set; }

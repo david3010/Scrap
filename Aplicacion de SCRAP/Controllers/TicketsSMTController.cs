@@ -150,11 +150,6 @@ namespace Aplicacion_de_SCRAP.Controllers
             listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
             listCauses = listCauses.OrderBy(l => l.Description).ToList();
             //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
-
-            var listCodes = db.CodesSMTs.ToList();
-            listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione Código...]" });
-            listCodes = listCodes.OrderBy(l => l.description).ToList();
-            ViewBag.CodesSMTId = new SelectList(listCodes, "CodesSMTId", "description");
             return View();
         }
 
@@ -163,16 +158,15 @@ namespace Aplicacion_de_SCRAP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TicketSMTID,TicketStatus,Sub_EnsambleID,LineID,CodesSMTId,CreateDate,Quantity,PartNo,CauseSMTID,Creator,Cost,Authorizing")] TicketsSMT ticketsSMT)
+        public ActionResult Create([Bind(Include = "TicketSMTID,TicketStatus,Sub_EnsambleID,LineID,CreateDate,Quantity,PartNo,CauseSMTID,Creator,Cost,Authorizing")] TicketsSMT ticketsSMT)
         {
             int id = 0;
 
             var Sub_EnsamblesID = Request["Sub_EnsambleID"];
             var LineID = Request["LineID"];
-            var CodesSMTId = Request["CodesSMTId"];
             var CauseSMTID = Request["CauseSMTID"];
 
-            if (LineID == "0" || Sub_EnsamblesID == "0" || CodesSMTId == "0" || CauseSMTID == "--" || CauseSMTID == null)
+            if (LineID == "0" || Sub_EnsamblesID == "0" || CauseSMTID == "--" || CauseSMTID == null)
             {
                 TempData["Alerta"] = "<script>swal('Debe llenar/actualizar todos los campos!');</script>";
 
@@ -192,12 +186,6 @@ namespace Aplicacion_de_SCRAP.Controllers
                 listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
                 listCauses = listCauses.OrderBy(l => l.Description).ToList();
                 //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
-
-                var listCodes = db.CodesSMTs.ToList();
-                listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione Código...]" });
-                listCodes = listCodes.OrderBy(l => l.description).ToList();
-                ViewBag.CodesSMTId = new SelectList(listCodes, "CodesSMTId", "description");
-                ViewBag.Scrap = LoadScrap();
                 return View(ticketsSMT);
             }
 
@@ -229,12 +217,6 @@ namespace Aplicacion_de_SCRAP.Controllers
                 listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
                 listCauses = listCauses.OrderBy(l => l.Description).ToList();
                 //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
-
-                var listCodes = db.CodesSMTs.ToList();
-                listCodes.Add(new CodesSMT { CodesSMTId = 0, description = "[Seleccione Código...]" });
-                listCodes = listCodes.OrderBy(l => l.description).ToList();
-                ViewBag.CodesSMTId = new SelectList(listCodes, "CodesSMTId", "description");
-                ViewBag.Scrap = LoadScrap();
                 return View(ticketsSMT);
             }
 
@@ -315,7 +297,6 @@ namespace Aplicacion_de_SCRAP.Controllers
             }
 
             //ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
-            ViewBag.CodesSMTId = new SelectList(db.CodesSMTs, "CodesSMTId", "code", ticketsSMT.CodesSMTId);
             var ListaLineas = (from u in db.Lines where u.Tipo == 0 select u).ToList();
             ViewBag.LineID = new SelectList(ListaLineas.OrderBy(l => l.LineName), "IIdLinea", "LineName");
             ViewBag.Sub_EnsambleID = new SelectList(db.Sub_Ensamble, "Sub_EnsambleID", "Sub_Ensamble_Description", ticketsSMT.Sub_EnsambleID);
@@ -337,7 +318,6 @@ namespace Aplicacion_de_SCRAP.Controllers
                 return HttpNotFound();
             }
             //ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
-            ViewBag.CodesSMTId = new SelectList(db.CodesSMTs, "CodesSMTId", "code", ticketsSMT.CodesSMTId);
             var ListaLineas = (from u in db.Lines where u.Tipo == 0 select u).ToList();
             ViewBag.LineID = new SelectList(ListaLineas.OrderBy(l => l.LineName), "IIdLinea", "LineName");
             ViewBag.Sub_EnsambleID = new SelectList(db.Sub_Ensamble, "Sub_EnsambleID", "Sub_Ensamble_Description", ticketsSMT.Sub_EnsambleID);
@@ -350,7 +330,7 @@ namespace Aplicacion_de_SCRAP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TicketSMTID,TicketStatus,Sub_EnsambleID,LineID,CodesSMTId,CreateDate,Quantity,PartNo,CauseSMTID,Creator,Cost,Authorizing")] TicketsSMT ticketsSMT)
+        public ActionResult Edit([Bind(Include = "TicketSMTID,TicketStatus,Sub_EnsambleID,LineID,CreateDate,Quantity,PartNo,CauseSMTID,Creator,Cost,Authorizing")] TicketsSMT ticketsSMT)
         {
             if (ModelState.IsValid)
             {
@@ -359,7 +339,6 @@ namespace Aplicacion_de_SCRAP.Controllers
                 return RedirectToAction("Index");
             }
             //ViewBag.CauseSMTID = new SelectList(db.CauseSMTs, "CauseSMTID", "Code", ticketsSMT.CauseSMTID);
-            ViewBag.CodesSMTId = new SelectList(db.CodesSMTs, "CodesSMTId", "code", ticketsSMT.CodesSMTId);
             var ListaLineas = (from u in db.Lines where u.Tipo == 0 select u).ToList();
             ViewBag.LineID = new SelectList(ListaLineas.OrderBy(l => l.LineName), "IIdLinea", "LineName");
             ViewBag.Sub_EnsambleID = new SelectList(db.Sub_Ensamble, "Sub_EnsambleID", "Sub_Ensamble_Description", ticketsSMT.Sub_EnsambleID);
@@ -640,14 +619,13 @@ namespace Aplicacion_de_SCRAP.Controllers
         private dynamic GetTickets()
         {
 
-            var ticketsSMTs = db.TicketsSMTs.Include(t => t.CauseSMT).Include(t => t.CodesSMT).Include(t => t.Lines).Include(t => t.NoParts).Include(t => t.Sub_Ensambles).Select(t => new
+            var ticketsSMTs = db.TicketsSMTs.Include(t => t.CauseSMT).Include(t => t.Lines).Include(t => t.NoParts).Include(t => t.Sub_Ensambles).Select(t => new
             {
                 Folio = t.TicketSMTID,
                 Estado = t.TicketStatus.ToString(),
                 SubEnsamble = t.Sub_Ensambles.Sub_Ensamble_Description,
                 Linea = t.Lines.LineName,
                 FechaDeCreacion = t.CreateDate.ToString(),
-                CodigoAsignado = t.CodesSMT.description,
                 Cantidad = t.Quantity,
                 NoDeParte = t.PartNo,
                 Causa = t.CauseSMT.Description,
