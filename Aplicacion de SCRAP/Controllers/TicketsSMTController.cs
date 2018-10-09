@@ -185,6 +185,7 @@ namespace Aplicacion_de_SCRAP.Controllers
                 var listCauses = db.CauseSMTs.ToList();
                 listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
                 listCauses = listCauses.OrderBy(l => l.Description).ToList();
+                ViewBag.Scrap = LoadScrap();
                 //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
                 return View(ticketsSMT);
             }
@@ -216,6 +217,7 @@ namespace Aplicacion_de_SCRAP.Controllers
                 var listCauses = db.CauseSMTs.ToList();
                 listCauses.Add(new CauseSMT { CauseSMTID = 0, Description = "[Seleccione Causa...]" });
                 listCauses = listCauses.OrderBy(l => l.Description).ToList();
+                ViewBag.Scrap = LoadScrap();
                 //ViewBag.CauseSMTID = new SelectList(listCauses, "CauseSMTID", "Description");
                 return View(ticketsSMT);
             }
